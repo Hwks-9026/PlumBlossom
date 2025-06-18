@@ -22,8 +22,8 @@ fn main() -> io::Result<()> {
     const TOTAL_SIZE: u64 = 4_294_967_296;
     const CHUNK_SIZE: usize = 1024 * 1024; // 1 MiB
     let zero_chunk = vec![0u8; CHUNK_SIZE];
-
-    let file = File::create(&args.output)?;
+    let rom_path = "roms/".to_owned() + &args.output;
+    let file = File::create(&rom_path)?;
     let mut writer = BufWriter::new(file);
 
     let mut written = 0;
@@ -34,17 +34,17 @@ fn main() -> io::Result<()> {
 
     writer.flush()?;
 
-    return assemble_from_directory(args);
+    return assemble_from_directory(&rom_path, args);
 }
 
-fn assemble_from_directory(args: Args) -> io::Result<()> {
+fn assemble_from_directory(rom_name: &String, args: Args) -> io::Result<()> {
     for entry in fs::read_dir(&args.input)? {
         let entry = entry?;
         let path = entry.path();
 
         if path.is_file() && path.extension().and_then(|ext| ext.to_str()) == Some("as") {
             let contents = fs::read_to_string(&path)?;
-            parse_file(&args.output, contents)?;
+            parse_file(&rom_name, contents)?;
         }
     }
     Ok(())
@@ -65,10 +65,26 @@ fn parse_file(rom_name: &String, contents: String) -> io::Result<()> {
         .collect();
 
     let mut byte_vec: Vec<u8> = Vec::new();
-
+    let mut jump_next: bool = false;
     for tok in tokens.iter() {
-        for byte in parse_byte_from_token(&tok) {
-            byte_vec.push(byte);
+        match parse_byte_from_token(&tok) {
+            Ok(bytes) => {
+                if jump_next {
+                    jump_next = false;
+                    file.seek(SeekFrom::Start(u32::from_le_bytes(
+                        bytes
+                            .try_into()
+                            .expect("Label Vec must have exactly 4 bytes"),
+                    ) as u64));
+                } else {
+                    for byte in bytes {
+                        byte_vec.push(byte);
+                    }
+                }
+            }
+            Err(message) => match message {
+                ParserMessage::HexLabel => jump_next = true,
+            },
         }
     }
     file.write_all(&byte_vec)?;
@@ -76,7 +92,7 @@ fn parse_file(rom_name: &String, contents: String) -> io::Result<()> {
     Ok(())
 }
 
-fn parse_byte_from_token(tok: &str) -> Vec<u8> {
+fn parse_byte_from_token(tok: &str) -> Result<Vec<u8>, ParserMessage> {
     let mut bytes: Vec<u8> = Vec::new();
     let mut token_match_failed: bool = false;
     match tok {
@@ -223,8 +239,11 @@ fn parse_byte_from_token(tok: &str) -> Vec<u8> {
             bytes.push(0x00);
             bytes.push(0x40);
         }
+        "@" => {
+            return Err(ParserMessage::HexLabel);
+        }
         "" => {
-            return bytes;
+            return Ok(bytes);
         }
         _ => token_match_failed = true,
     }
@@ -244,7 +263,7 @@ fn parse_byte_from_token(tok: &str) -> Vec<u8> {
             None => {}
         }
     }
-    return bytes;
+    return Ok(bytes);
 }
 
 fn parse_number(s: &str) -> Option<u32> {
@@ -259,4 +278,8 @@ fn parse_number(s: &str) -> Option<u32> {
             Ok(num) => Some(num),
         }
     }
+}
+
+enum ParserMessage {
+    HexLabel,
 }

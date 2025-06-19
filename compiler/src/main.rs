@@ -59,7 +59,7 @@ fn parse_file(rom_name: &String, contents: String) -> io::Result<()> {
     //JUMP TO START OF GENERAL MEMORY
     file.seek(SeekFrom::Start(614464))?;
 
-    let mut tokens: Vec<String> = contents
+    let tokens: Vec<String> = contents
         .split_whitespace()
         .map(|str| str.to_string())
         .collect();
@@ -101,6 +101,7 @@ fn parse_byte_from_token(tok: &str) -> Result<Vec<u8>, ParserMessage> {
         "JMP" => bytes.push(0x01),
         "CAL" => bytes.push(0x02),
         "RET" => bytes.push(0x03),
+        "STP" => bytes.push(0x04),
         "JNZ" => bytes.push(0x10),
         "JIZ" => bytes.push(0x11),
         "PSH" => bytes.push(0x12),

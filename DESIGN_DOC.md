@@ -20,11 +20,11 @@ em-x32 uses 16 general purpose registers: **r0** through **r15**, and a jump reg
 *some notation: %rX signifies any of the general purpose registers. ex: JZ %r0. If multiple registers are needed for an instruction they will be notated %rA, %rB, etc. Anytime a general purpose register can be used, %J may be used to write to or read from the* **J** *register*
 
 ## 0 Extra Words
-0x00: NOP           - No operation.
-0x01: JMP           - The jump instruction takes program execution to the address that is the **J** register.
-0x02: CAL           - Store address of next byte on the stack and execute JMP.
-0x03: RET           - Return from subroutine by popping stack and then jumping there.
-
+0x00: NOP               - No operation.
+0x01: JMP               - The jump instruction takes program execution to the address that is the **J** register.
+0x02: CAL               - Store address of next byte on the stack and execute JMP.
+0x03: RET               - Return from subroutine by popping stack and then jumping there.
+0x04: STP               - Stop the CPU and dump register content. EMULATOR ONLY
 ## 1 Extra Word
 0x10: JNZ %rX           - JMP if %rX is not zero.
 0x11: JIZ %rX           - JMP if %rX is zero.

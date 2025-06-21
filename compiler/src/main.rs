@@ -42,7 +42,7 @@ fn assemble_from_directory(rom_name: &String, args: Args) -> io::Result<()> {
         let entry = entry?;
         let path = entry.path();
 
-        if path.is_file() && path.extension().and_then(|ext| ext.to_str()) == Some("as") {
+        if path.is_file() && path.extension().and_then(|ext| ext.to_str()) == Some("pbas") {
             let contents = fs::read_to_string(&path)?;
             parse_file(&rom_name, contents)?;
         }

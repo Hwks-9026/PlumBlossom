@@ -1,1 +1,0 @@
-/home/hwks/git/PlumBlossom/em-x32/target/debug/em-x32: /home/hwks/git/PlumBlossom/em-x32/src/debugtools.rs /home/hwks/git/PlumBlossom/em-x32/src/emulator.rs /home/hwks/git/PlumBlossom/em-x32/src/instruction.rs /home/hwks/git/PlumBlossom/em-x32/src/main.rs /home/hwks/git/PlumBlossom/em-x32/src/memory.rs /home/hwks/git/PlumBlossom/em-x32/src/registers.rs

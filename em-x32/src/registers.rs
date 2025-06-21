@@ -48,7 +48,9 @@ IP = 64,
 
 impl Registers {
     pub fn new() -> Registers {
-        return Registers::default();
+        let mut r = Registers::default();
+        r.sp = 0x80096040;
+        return r;
     }
 
     pub fn write(&mut self, register: u32, value: u32) {

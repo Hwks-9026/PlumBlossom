@@ -55,5 +55,6 @@ Memory on the PlumBlossom system is mapped as such:
 0x00000028 - 0x0000003F || Checksum for loaded image file that is calculated by the emulator at start up
 0x00000040 - 0x0009603F || Custom black and white display for system. (Two buffers)
 0x00096040 - 0x8009603F || 2 Gigabytes of general purpose ram for user programs
-0x80096040 - 0xFFFFFFFF || Unspecified readable/writable. Depending on the configuration could be used for a different external device.
+0x80096040 - 0x8009803F || 512 word stack for function call address and temporary storage variable.
+0x8009A040 - 0xFFFFFFFF || Unspecified readable/writable. Depending on the configuration could be used for a different external device.
              

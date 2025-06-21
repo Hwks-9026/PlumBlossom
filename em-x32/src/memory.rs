@@ -26,6 +26,13 @@ impl Memory {
         return word;
     }
 
+    pub fn write_word(&mut self, index: u32, word: u32) {
+        self.write_byte(index,     ((word >> 24) & 0xFF) as u8);
+        self.write_byte(index + 1, ((word >> 16) & 0xFF) as u8);
+        self.write_byte(index + 2, ((word >> 8)  & 0xFF) as u8);
+        self.write_byte(index + 3, (word         & 0xFF) as u8);
+    }
+
     pub fn write_byte(&mut self, index: u32, byte: u8) {
         self.raw_memory[index as usize] = byte;
     }

@@ -1,4 +1,4 @@
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub(crate) struct Registers {
     r0: u32,
     r1: u32,
@@ -20,6 +20,30 @@ pub(crate) struct Registers {
     pc: u32,
     sp: u32,
     ip: u32,
+}
+
+#[repr(u32)]
+pub(crate) enum Register {
+R0 = 0,
+R1 = 1,
+R2 = 2,
+R3 = 3,
+R4 = 4,
+R5 = 5,
+R6 = 6,
+R7 = 7,
+R8 = 8,
+R9 = 9,
+R10 = 10,
+R11 = 11,
+R12 = 12,
+R13 = 13,
+R14 = 14,
+R15 = 15,
+J = 16, 
+PC = 32,
+SP = 48,
+IP = 64,
 }
 
 impl Registers {
@@ -48,6 +72,7 @@ impl Registers {
             16 => self.j = value,
             32 => self.pc = value,
             48 => self.sp = value,
+            64 => self.ip = value,
             _ => {}
         }
     }

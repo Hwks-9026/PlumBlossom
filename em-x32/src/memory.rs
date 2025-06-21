@@ -1,3 +1,4 @@
+use crate::debugtools::mem_dump;
 pub(crate) struct Memory {
     raw_memory: Vec<u8>,
 }
@@ -13,7 +14,22 @@ impl Memory {
     pub fn read_byte(&self, index: u32) -> u8 {
         return self.raw_memory[index as usize];
     }
+
+    pub fn read_word(&self, index: u32) -> u32 {
+        let mut word: u32 = self.read_byte(index) as u32;
+        word = word << 8;
+        word += self.read_byte(index + 1) as u32;
+        word = word << 8;
+        word += self.read_byte(index + 2) as u32;
+        word = word << 8;
+        word += self.read_byte(index + 3) as u32;
+        return word;
+    }
+
     pub fn write_byte(&mut self, index: u32, byte: u8) {
         self.raw_memory[index as usize] = byte;
+    }
+    pub(crate) fn debug_print(&self) {
+        mem_dump(&self.raw_memory);
     }
 }

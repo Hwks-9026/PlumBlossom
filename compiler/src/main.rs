@@ -71,7 +71,9 @@ fn parse_file(rom_name: &String, contents: String) -> io::Result<()> {
             Ok(bytes) => {
                 if jump_next {
                     jump_next = false;
-                    file.seek(SeekFrom::Start(u32::from_le_bytes(
+                    file.write_all(&byte_vec)?;
+                    byte_vec = Vec::new();
+                    file.seek(SeekFrom::Start(u32::from_be_bytes(
                         bytes
                             .try_into()
                             .expect("Label Vec must have exactly 4 bytes"),

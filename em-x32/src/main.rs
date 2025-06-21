@@ -8,6 +8,8 @@ use std::{
 mod emulator;
 mod memory;
 mod registers;
+mod instruction;
+mod debugtools;
 fn main() {
     let mut args: Vec<String> = env::args().collect();
     args.remove(0);

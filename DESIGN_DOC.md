@@ -1,10 +1,18 @@
 ```Markdown
 # Design Goals
-1. Better understand computer architecture by developing an emulator for a simple 32 bit CPU with 32 bit memory addressing, and 32 bit words.
-2. Write a custom assembly language and compiler to generate it, and link it into a rom that can be loaded into memory for the CPU to execute.
+1. Better understand computer architecture by developing an emulator for a simple 32 bit CPU
+   with 32 bit memory addressing, and 32 bit words.
+2. Write a custom assembly language and compiler to generate it, and link it into a rom that
+   can be loaded into memory for the CPU to execute.
 
 # Register Layout
-em-x32 uses 16 general purpose registers: **r0** through **r15**, and a jump register **J**. These Registers are each 32 bits. The **PC** register tracks the number of instructions since power on, wrapping around. It is also 32 bits. A flag can be set in memory with an address in general RAM at which to increment upon wrap around. The stack pointer, **SP** is a register that points to a 32 bit memory address in the stack RAM. A non-writable register **IP** keeps track of the instruction pointer. 
+em-x32 uses 16 general purpose registers: **r0** through **r15**, and a jump register **J**.
+These Registers are each 32 bits. The **PC** register tracks the number of instructions since
+power on, wrapping around. It is also 32 bits. A flag can be set in memory with an address in
+general RAM at which to increment upon wrap around. The stack pointer, **SP** is a register that
+points to a 32 bit memory address in the stack RAM. A non-writable register **IP** keeps track
+of the instruction pointer.
+
 ## Register Hex Words
 0x00000000: r0
 0x00000001: r1
@@ -16,9 +24,15 @@ em-x32 uses 16 general purpose registers: **r0** through **r15**, and a jump reg
 0x00000040: IP
 
 # Instruction Set
-- em-x32 has a small instruction set. Instructions are two bytes, followed by up to 15 bytes of additional data. This additional data could be a register label or a 32 bit signed integer, written in decimal or hexidecimal. The first byte of the instruction demarcates how much additional data the CPU should fetch in memory, from zero words to three words. The second byte denotes which instruction the CPU should execute with the additional data.
+- em-x32 has a small instruction set. Instructions are two bytes, followed by up to 15 bytes of
+  additional data. This additional data could be a register label or a 32 bit signed integer,
+  written in decimal or hexidecimal. The first byte of the instruction demarcates how much
+  additional data the CPU should fetch in memory, from zero words to three words. The second byte
+  denotes which instruction the CPU should execute with the additional data.
 
-*some notation: %rX signifies any of the general purpose registers. ex: JZ %r0. If multiple registers are needed for an instruction they will be notated %rA, %rB, etc. Anytime a general purpose register can be used, %J may be used to write to or read from the* **J** *register*
+*some notation: %rX signifies any of the general purpose registers. ex: JZ %r0. If multiple
+ registers are needed for an instruction they will be notated %rA, %rB, etc. Anytime a general
+ purpose register can be used, %J may be used to write to or read from the* **J** *register*
 
 ## 0 Extra Words
 0x00: NOP               - No operation.

@@ -25,6 +25,8 @@ em-x32 uses 16 general purpose registers: **r0** through **r15**, and a jump reg
 0x02: CAL               - Store address of next byte on the stack and execute JMP.
 0x03: RET               - Return from subroutine by popping stack and then jumping there.
 0x04: STP               - Stop the CPU and dump register content. EMULATOR ONLY
+0x05: DBG               - Print register content to the screen. EMULATOR ONLY
+
 ## 1 Extra Word
 0x10: JNZ %rX           - JMP if %rX is not zero.
 0x11: JIZ %rX           - JMP if %rX is zero.

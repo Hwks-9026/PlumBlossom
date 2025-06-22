@@ -1,0 +1,23 @@
+@ 0x00096040
+MVI %r0 72
+MVI %r1 12
+MVI %J  0x000A0000
+JMP
+
+@ 0x000A0000
+MVI %J 0x000B0000
+JIZ %r1
+MOV %r4 %r1
+DIV %r2 %r0 %r1
+MUL %r3 %r2 %r1
+SUB %r1 %r3 %r0
+MOV %r0 %r4
+MVI %J 0x000A0000
+JMP
+
+@ 0x000B0000
+MVI %r1 0
+MVI %r2 0
+MVI %r3 0
+MVI %r4 0
+STP

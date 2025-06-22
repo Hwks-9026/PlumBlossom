@@ -104,6 +104,7 @@ fn parse_byte_from_token(tok: &str) -> Result<Vec<u8>, ParserMessage> {
         "CAL" => bytes.push(0x02),
         "RET" => bytes.push(0x03),
         "STP" => bytes.push(0x04),
+        "DBG" => bytes.push(0x05),
         "JNZ" => bytes.push(0x10),
         "JIZ" => bytes.push(0x11),
         "PSH" => bytes.push(0x12),

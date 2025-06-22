@@ -70,7 +70,7 @@ pub(crate) fn add(em: &mut Emulator, execution_words: Vec<u32>) {
 pub(crate) fn sub(em: &mut Emulator, execution_words: Vec<u32>) {
     let r1 = em.registers.read(execution_words[1]);
     let r2 = em.registers.read(execution_words[2]);
-    em.registers.write(execution_words[0], r1 - r2);
+    em.registers.write(execution_words[0], r2 - r1);
 }
 pub(crate) fn mul(em: &mut Emulator, execution_words: Vec<u32>) {
     let r1 = em.registers.read(execution_words[1]);

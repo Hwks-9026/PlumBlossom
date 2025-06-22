@@ -1,3 +1,4 @@
+```Markdown
 # Design Goals
 1. Better understand computer architecture by developing an emulator for a simple 32 bit CPU with 32 bit memory addressing, and 32 bit words.
 2. Write a custom assembly language and compiler to generate it, and link it into a rom that can be loaded into memory for the CPU to execute.
@@ -59,4 +60,4 @@ Memory on the PlumBlossom system is mapped as such:
 0x00096040 - 0x8009603F || 2 Gigabytes of general purpose ram for user programs
 0x80096040 - 0x8009803F || 512 word stack for function call address and temporary storage variable.
 0x8009A040 - 0xFFFFFFFF || Unspecified readable/writable. Depending on the configuration could be used for a different external device.
-             
+```            

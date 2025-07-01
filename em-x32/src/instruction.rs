@@ -60,7 +60,7 @@ pub(crate) fn lda(em: &mut Emulator, execution_words: Vec<u32>) {
     em.registers.write(execution_words[0], em.memory.read_word(execution_words[1]));
 }
 pub(crate) fn sta(em: &mut Emulator, execution_words: Vec<u32>) {
-    em.memory.write_word(execution_words[1], em.registers.read(execution_words[0]));
+    em.memory.write_word(em.registers.read(execution_words[1]), em.registers.read(execution_words[0]));
 }
 pub(crate) fn add(em: &mut Emulator, execution_words: Vec<u32>) {
     let r1 = em.registers.read(execution_words[1]);

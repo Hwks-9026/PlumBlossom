@@ -105,6 +105,7 @@ fn parse_byte_from_token(tok: &str) -> Result<Vec<u8>, ParserMessage> {
         "RET" => bytes.push(0x03),
         "STP" => bytes.push(0x04),
         "DBG" => bytes.push(0x05),
+        "DSP" => bytes.push(0x06),
         "JNZ" => bytes.push(0x10),
         "JIZ" => bytes.push(0x11),
         "PSH" => bytes.push(0x12),
@@ -245,6 +246,12 @@ fn parse_byte_from_token(tok: &str) -> Result<Vec<u8>, ParserMessage> {
         }
         "@" => {
             return Err(ParserMessage::HexLabel);
+        }
+        "RESET" => {
+            bytes.push(0x00);
+            bytes.push(0x09);
+            bytes.push(0x60);
+            bytes.push(0x40);
         }
         "" => {
             return Ok(bytes);

@@ -27,10 +27,10 @@ impl Memory {
     }
 
     pub fn write_word(&mut self, index: u32, word: u32) {
-        self.write_byte(index,     ((word >> 24) & 0xFF) as u8);
+        self.write_byte(index, ((word >> 24) & 0xFF) as u8);
         self.write_byte(index + 1, ((word >> 16) & 0xFF) as u8);
-        self.write_byte(index + 2, ((word >> 8)  & 0xFF) as u8);
-        self.write_byte(index + 3, (word         & 0xFF) as u8);
+        self.write_byte(index + 2, ((word >> 8) & 0xFF) as u8);
+        self.write_byte(index + 3, (word & 0xFF) as u8);
     }
 
     pub fn write_byte(&mut self, index: u32, byte: u8) {
@@ -38,5 +38,15 @@ impl Memory {
     }
     pub(crate) fn debug_print(&self) {
         mem_dump(&self.raw_memory);
+    }
+    pub(crate) fn get_frame(&self) -> Vec<u8> {
+        let mem_offset = 0x40;
+        println!(
+            "{}, {}",
+            self.raw_memory[mem_offset],
+            self.raw_memory[mem_offset + 1228799]
+        );
+        let data = &self.raw_memory[mem_offset..(mem_offset + 1228800)];
+        data.to_vec()
     }
 }

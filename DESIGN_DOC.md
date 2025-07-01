@@ -41,6 +41,7 @@ of the instruction pointer.
 0x03: RET               - Return from subroutine by popping stack and then jumping there.
 0x04: STP               - Stop the CPU and dump register content. EMULATOR ONLY
 0x05: DBG               - Print register content to the screen. EMULATOR ONLY
+0x06: DSP               - Rasterize screen with the contents of the framebuffer 
 
 ## 1 Extra Word
 0x10: JNZ %rX           - JMP if %rX is not zero.
@@ -68,7 +69,7 @@ of the instruction pointer.
 # 32 Bit Memory Map
 Memory on the PlumBlossom system is mapped as such:
 0x00000000 - 0x0000001F || The first 32 bits contain the reset vector the system will change the instruction pointer to.
-0x00000020 - 0x00000027 || The next 8 bits contain important flags. See appendix 1.
+0x00000020 - 0x00000027 || The next 8 bytes contain important flags. See appendix 1.
 0x00000028 - 0x0000003F || Checksum for loaded image file that is calculated by the emulator at start up
 0x00000040 - 0x0009603F || Custom black and white display for system. (Two buffers)
 0x00096040 - 0x8009603F || 2 Gigabytes of general purpose ram for user programs

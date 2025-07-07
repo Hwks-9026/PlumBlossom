@@ -10,6 +10,7 @@ mod memory;
 mod registers;
 mod instruction;
 mod debugtools;
+mod rasterize;
 fn main() {
     let mut args: Vec<String> = env::args().collect();
     args.remove(0);

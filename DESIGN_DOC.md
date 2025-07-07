@@ -39,8 +39,10 @@ of the instruction pointer.
 0x01: JMP               - The jump instruction takes program execution to the address that is the **J** register.
 0x02: CAL               - Store address of next byte on the stack and execute JMP.
 0x03: RET               - Return from subroutine by popping stack and then jumping there.
-0x04: STP               - Stop the CPU and dump register content. EMULATOR ONLY
-0x05: DBG               - Print register content to the screen. EMULATOR ONLY
+0x04: RST               - Rasterize contents of display buffer. 
+0x05: STP               - Stop the CPU and dump register content. EMULATOR ONLY
+0x06: DBG               - Print register content to the screen. EMULATOR ONLY
+0x07: MEM               - Smart print contents of memory to screen. EMULATOR ONLY
 
 ## 1 Extra Word
 0x10: JNZ %rX           - JMP if %rX is not zero.

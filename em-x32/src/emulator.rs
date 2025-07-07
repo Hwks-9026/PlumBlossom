@@ -1,5 +1,6 @@
 #[allow(dead_code)]
 use crate::memory::Memory;
+use crate::rasterize;
 use crate::registers::Register;
 use crate::registers::Registers;
 use crate::instruction::*;
@@ -95,8 +96,13 @@ fn execute_instruction(
     0x01=> {jmp(em, execution_words)},
     0x02=> {cal(em, execution_words)},
     0x03=> {ret(em, execution_words)},
-    0x04=> {println!("CPU HALTING!\nRegister Content: {:?}", em.registers); return Err(())},
-    0x05=> {println!("Debug Register Print: {:?}", em.registers)},
+    0x04=> {
+        let buffer = em.memory.get_frame();
+        rasterize::blit(buffer);
+    }
+    0x05=> {println!("CPU HALTING!\nRegister Content: {:?}", em.registers); return Err(())},
+    0x06=> {println!("Debug Register Print: {:?}", em.registers)},
+    0x07=> {em.memory.debug_print();}
     0x10=> {jnz(em, execution_words)},
     0x11=> {jiz(em, execution_words)},
     0x12=> {psh(em, execution_words)},

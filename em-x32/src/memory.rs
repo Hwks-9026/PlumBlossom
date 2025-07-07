@@ -39,4 +39,14 @@ impl Memory {
     pub(crate) fn debug_print(&self) {
         mem_dump(&self.raw_memory);
     }
+    pub(crate) fn get_frame(&self) -> Vec<u8> {
+        let mem_offset = 0x40;
+        println!(
+            "{}, {}",
+            self.raw_memory[mem_offset],
+            self.raw_memory[mem_offset + 1228799]
+        );
+        let data = &self.raw_memory[mem_offset..(mem_offset + 1228800)];
+        data.to_vec()
+    }
 }
